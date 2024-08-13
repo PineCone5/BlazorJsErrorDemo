@@ -1,0 +1,29 @@
+﻿@page "/counter"
+@using SpawnDev.BlazorJS
+@inject BlazorJSRuntime Js
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+@code {
+    protected override Task OnInitializedAsync()
+    {
+        Js.Set("testCallback", Callback.Create((string strArg) =>
+        {
+            Console.WriteLine($"Javascript sent: {strArg}");
+            // this prints "Hello callback!"
+        }));
+        return base.OnInitializedAsync();
+    }
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+}
